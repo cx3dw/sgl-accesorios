@@ -11,10 +11,9 @@
   <meta property="og:title" id="og-title" content="SGL ACCESORIOS | Tienda Online" />
   <meta property="og:description" id="og-desc" content="Descubre nuestro catálogo oficial de accesorios y productos con envíos a todo el país." />
   
-  <!-- IMAGEN PRINCIPAL PARA REDES SOCIALES -->
-  <meta property="og:image" id="og-image" content="" />https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg
-  <meta property="og:image:secure_url" id="og-image-secure" content="" />https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg
-  
+  <!-- IMAGEN PRINCIPAL REAL DE SUPABASE PARA REDES SOCIALES -->
+  <meta property="og:image" id="og-image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg" />
+  <meta property="og:image:secure_url" id="og-image-secure" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -23,7 +22,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SGL ACCESORIOS | Tienda Online" />
   <meta name="twitter:description" content="Descubre nuestro catálogo oficial de accesorios y productos." />
-  <meta name="twitter:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/logo.jpg" />
+  <meta name="twitter:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -118,7 +117,7 @@
         
         productosLocales = data || [];
 
-        // Asignación de imagen de portada por si está presente el primer producto con foto válida
+        // Asignación de imagen de portada si está presente el primer producto con foto válida
         const primerProductoValido = productosLocales.find(p => p.imagen && p.imagen.trim().startsWith('http'));
         if (primerProductoValido) {
           const ogImg = document.getElementById('og-image');
