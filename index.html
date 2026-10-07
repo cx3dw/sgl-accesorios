@@ -9,8 +9,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="SGL ACCESORIOS | Tienda Online" />
   <meta property="og:description" content="Descubre nuestro catálogo oficial de productos y accesorios con envíos a todo el país." />
-  <!-- Imagen de portada para las tarjetas de previsualización -->
-  <meta property="og:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/logo_sgl.jpg" />
+  <!-- Imagen de vista previa pública alojada en Supabase Storage -->
+  <meta property="og:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_132578.jpg" />
+  <meta property="og:image:secure_url" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_132578.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
@@ -159,89 +161,4 @@
             <p class="text-[10px] text-gray-400">Cód: ${p.codigo}</p>
           </div>
 
-          <div class="mt-3 pt-2 border-t border-gray-100 dark:border-gray-700/50 flex items-center justify-between">
-            <span class="text-sm font-extrabold text-gray-900 dark:text-white">$${Number(p.precio).toFixed(2)}</span>
-            
-            <a href="https://wa.me/${TELEFONO_WHATSAPP}?text=Hola, consulto por el producto: ${encodeURIComponent(p.nombre)} (Cód: ${p.codigo})" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5">
-              <i class="ph ph-whatsapp-logo text-base"></i> Consultar
-            </a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function buscarProductos(texto) {
-      const q = texto.toLowerCase();
-      const filtrados = productosLocales.filter(p => p.nombre.toLowerCase().includes(q) || p.codigo.toLowerCase().includes(q));
-      renderizarProductos(filtrados);
-    }
-
-    // Control de menús desplegables
-    function toggleMenu(e, id) {
-      e.stopPropagation();
-      cerrarTodosLosMenus();
-      const menu = document.getElementById(id);
-      if (menu) menu.classList.toggle('hidden');
-    }
-
-    function cerrarTodosLosMenus(e) {
-      document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden'));
-    }
-
-    // Compartir Tienda Web por Red Social
-    function compartirWebRed(red, e) {
-      e.preventDefault();
-      const url = encodeURIComponent(window.location.href);
-      const texto = encodeURIComponent('¡Mirá la tienda online de SGL ACCESORIOS!');
-
-      abrirRedSocial(red, url, texto, "¡Enlace de la tienda copiado!");
-    }
-
-    // Compartir Producto por Red Social
-    function compartirProductoRed(red, nombre, codigo, e) {
-      e.preventDefault();
-      const url = encodeURIComponent(window.location.href);
-      const texto = encodeURIComponent(`Mirá este producto en SGL Accesorios: ${nombre} (Cód: ${codigo})`);
-
-      abrirRedSocial(red, url, texto, "¡Enlace del producto copiado!");
-    }
-
-    function abrirRedSocial(red, url, texto, mensajeCopiar) {
-      let shareUrl = '';
-      
-      switch(red) {
-        case 'whatsapp':
-          shareUrl = `https://api.whatsapp.com/send?text=${texto}%20${url}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'facebook':
-          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'telegram':
-          shareUrl = `https://t.me/share/url?url=${url}&text=${texto}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'copiar':
-          navigator.clipboard.writeText(decodeURIComponent(texto) + " - " + decodeURIComponent(url));
-          mostrarToast(mensajeCopiar);
-          break;
-      }
-      cerrarTodosLosMenus();
-    }
-
-    function mostrarToast(mensaje) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-message').innerText = mensaje;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      
-      setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
-    }
-
-    window.addEventListener('DOMContentLoaded', obtenerProductos);
-  </script>
-</body>
-</html>
+          <div class="mt-
