@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es" class="h-full">
 <head>
@@ -243,3 +241,64 @@
       e.stopPropagation();
       cerrarTodosLosMenus();
       const menu = document.getElementById(id);
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function cerrarTodosLosMenus(e) {
+      document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden'));
+    }
+
+    function compartirWebRed(red, e) {
+      e.preventDefault();
+      const url = encodeURIComponent(window.location.href);
+      const texto = encodeURIComponent('¡Mirá la tienda online de SGL ACCESORIOS!');
+
+      abrirRedSocial(red, url, texto, "¡Enlace de la tienda copiado!");
+    }
+
+    function compartirProductoRed(red, nombre, codigo, imagen, e) {
+      e.preventDefault();
+      const url = encodeURIComponent(window.location.href);
+      const texto = encodeURIComponent(`Mirá este producto en SGL Accesorios: ${nombre} (Cód: ${codigo})`);
+
+      abrirRedSocial(red, url, texto, "¡Enlace del producto copiado!");
+    }
+
+    function abrirRedSocial(red, url, texto, mensajeCopiar) {
+      let shareUrl = '';
+      
+      switch(red) {
+        case 'whatsapp':
+          shareUrl = `https://api.whatsapp.com/send?text=${texto}%20${url}`;
+          window.open(shareUrl, '_blank');
+          break;
+        case 'facebook':
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+          window.open(shareUrl, '_blank');
+          break;
+        case 'telegram':
+          shareUrl = `https://t.me/share/url?url=${url}&text=${texto}`;
+          window.open(shareUrl, '_blank');
+          break;
+        case 'copiar':
+          navigator.clipboard.writeText(decodeURIComponent(texto) + " - " + decodeURIComponent(url));
+          mostrarToast(mensajeCopiar);
+          break;
+      }
+      cerrarTodosLosMenus();
+    }
+
+    function mostrarToast(mensaje) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').innerText = mensaje;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    window.addEventListener('DOMContentLoaded', obtenerProductos);
+  </script>
+</body>
+</html>
