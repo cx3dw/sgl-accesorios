@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es" class="h-full">
 <head>
@@ -62,8 +63,9 @@
   <header class="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white font-black text-xl shadow-md">
-          S
+        <!-- LOGO SUPABASE INTEGRADO -->
+        <div class="w-10 h-10 rounded-xl overflow-hidden shadow-md flex items-center justify-center bg-white border border-gray-100 dark:border-gray-800 flex-shrink-0">
+          <img src="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/mi_logo.jpg" alt="Logo SGL Accesorios" class="w-full h-full object-cover">
         </div>
         <div>
           <h1 class="text-base font-extrabold tracking-tight leading-none text-gray-900 dark:text-white">
@@ -241,64 +243,3 @@
       e.stopPropagation();
       cerrarTodosLosMenus();
       const menu = document.getElementById(id);
-      if (menu) menu.classList.toggle('hidden');
-    }
-
-    function cerrarTodosLosMenus(e) {
-      document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden'));
-    }
-
-    function compartirWebRed(red, e) {
-      e.preventDefault();
-      const url = encodeURIComponent(window.location.href);
-      const texto = encodeURIComponent('¡Mirá la tienda online de SGL ACCESORIOS!');
-
-      abrirRedSocial(red, url, texto, "¡Enlace de la tienda copiado!");
-    }
-
-    function compartirProductoRed(red, nombre, codigo, imagen, e) {
-      e.preventDefault();
-      const url = encodeURIComponent(window.location.href);
-      const texto = encodeURIComponent(`Mirá este producto en SGL Accesorios: ${nombre} (Cód: ${codigo})`);
-
-      abrirRedSocial(red, url, texto, "¡Enlace del producto copiado!");
-    }
-
-    function abrirRedSocial(red, url, texto, mensajeCopiar) {
-      let shareUrl = '';
-      
-      switch(red) {
-        case 'whatsapp':
-          shareUrl = `https://api.whatsapp.com/send?text=${texto}%20${url}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'facebook':
-          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'telegram':
-          shareUrl = `https://t.me/share/url?url=${url}&text=${texto}`;
-          window.open(shareUrl, '_blank');
-          break;
-        case 'copiar':
-          navigator.clipboard.writeText(decodeURIComponent(texto) + " - " + decodeURIComponent(url));
-          mostrarToast(mensajeCopiar);
-          break;
-      }
-      cerrarTodosLosMenus();
-    }
-
-    function mostrarToast(mensaje) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-message').innerText = mensaje;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      
-      setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
-    }
-
-    window.addEventListener('DOMContentLoaded', obtenerProductos);
-  </script>
-</body>
-</html>
