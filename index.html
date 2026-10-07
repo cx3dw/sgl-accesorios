@@ -5,17 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SGL ACCESORIOS | Tienda Online</title>
 
-  <!-- META ETIQUETAS OPEN GRAPH PARA FACEBOOK -->
+  <!-- META ETIQUETAS OPEN GRAPH (Facebook, WhatsApp, Telegram) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="SGL ACCESORIOS | Tienda Online" />
-  <meta property="og:description" content="Descubre nuestro catálogo oficial de productos y accesorios con envíos a todo el país." />
+  <meta property="og:site_name" content="SGL ACCESORIOS" />
+  <meta property="og:title" id="og-title" content="SGL ACCESORIOS | Tienda Online" />
+  <meta property="og:description" id="og-desc" content="Descubre nuestro catálogo oficial de accesorios y productos con envíos a todo el país." />
   
-  <!-- FOTO DE TU CATÁLOGO PARA MOSTRAR EN FACEBOOK -->
-  <meta property="og:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_1.jpg" />
-  <meta property="og:image:secure_url" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_1.jpg" />
+  <!-- IMAGEN PRINCIPAL PARA REDES SOCIALES -->
+  <meta property="og:image" id="og-image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/logo.jpg" />
+  <meta property="og:image:secure_url" id="og-image-secure" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/logo.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+
+  <!-- TWITTER CARDS -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SGL ACCESORIOS | Tienda Online" />
+  <meta name="twitter:description" content="Descubre nuestro catálogo oficial de accesorios y productos." />
+  <meta name="twitter:image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/logo.jpg" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -109,9 +116,19 @@
         if (error) throw error;
         
         productosLocales = data || [];
+
+        // Asignación de imagen de portada por si está presente el primer producto con foto válida
+        const primerProductoValido = productosLocales.find(p => p.imagen && p.imagen.trim().startsWith('http'));
+        if (primerProductoValido) {
+          const ogImg = document.getElementById('og-image');
+          const ogImgSec = document.getElementById('og-image-secure');
+          if (ogImg) ogImg.setAttribute('content', primerProductoValido.imagen);
+          if (ogImgSec) ogImgSec.setAttribute('content', primerProductoValido.imagen);
+        }
+
         renderizarProductos(productosLocales);
       } catch (err) {
-        console.error("Error cargando productos:", err);
+        console.error("Error al cargar productos desde Supabase:", err);
       }
     }
 
@@ -149,16 +166,16 @@
 
                 <div id="${menuId}" class="hidden absolute right-0 mt-2 w-44 rounded-2xl bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 py-2 z-50">
                   <span class="block px-4 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Compartir</span>
-                  <a href="#" onclick="compartirProductoRed('whatsapp', '${nombreEscape}', '${p.codigo}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
+                  <a href="#" onclick="compartirProductoRed('whatsapp', '${nombreEscape}', '${p.codigo}', '${imgUrl}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
                     <i class="ph ph-whatsapp-logo text-emerald-500 text-base"></i> WhatsApp
                   </a>
-                  <a href="#" onclick="compartirProductoRed('facebook', '${nombreEscape}', '${p.codigo}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
+                  <a href="#" onclick="compartirProductoRed('facebook', '${nombreEscape}', '${p.codigo}', '${imgUrl}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
                     <i class="ph ph-facebook-logo text-blue-600 text-base"></i> Facebook
                   </a>
-                  <a href="#" onclick="compartirProductoRed('telegram', '${nombreEscape}', '${p.codigo}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
+                  <a href="#" onclick="compartirProductoRed('telegram', '${nombreEscape}', '${p.codigo}', '${imgUrl}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50">
                     <i class="ph ph-telegram-logo text-sky-500 text-base"></i> Telegram
                   </a>
-                  <a href="#" onclick="compartirProductoRed('copiar', '${nombreEscape}', '${p.codigo}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50 border-t border-gray-100 dark:border-gray-700/50 mt-1 pt-1">
+                  <a href="#" onclick="compartirProductoRed('copiar', '${nombreEscape}', '${p.codigo}', '${imgUrl}', event)" class="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700/50 border-t border-gray-100 dark:border-gray-700/50 mt-1 pt-1">
                     <i class="ph ph-link text-gray-500 text-base"></i> Copiar Enlace
                   </a>
                 </div>
@@ -206,7 +223,7 @@
       abrirRedSocial(red, url, texto, "¡Enlace de la tienda copiado!");
     }
 
-    function compartirProductoRed(red, nombre, codigo, e) {
+    function compartirProductoRed(red, nombre, codigo, imagen, e) {
       e.preventDefault();
       const url = encodeURIComponent(window.location.href);
       const texto = encodeURIComponent(`Mirá este producto en SGL Accesorios: ${nombre} (Cód: ${codigo})`);
