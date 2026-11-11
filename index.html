@@ -11,7 +11,7 @@
   <meta property="og:title" id="og-title" content="SGL ACCESORIOS | Tienda Online" />
   <meta property="og:description" id="og-desc" content="Descubre nuestro catálogo oficial de accesorios y productos con envíos a todo el país." />
   
-  <!-- IMAGEN PRINCIPAL PARA REDES SOCIALES -->
+  <!-- IMAGEN PRINCIPAL REAL DE SUPABASE PARA REDES SOCIALES -->
   <meta property="og:image" id="og-image" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg" />
   <meta property="og:image:secure_url" id="og-image-secure" content="https://qxinfbodipqinyvgeojz.supabase.co/storage/v1/object/public/imagenes/producto_29052.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
@@ -137,7 +137,7 @@
   <!-- CATÁLOGO DE PRODUCTOS -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
     <div id="grid-productos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-      <p class="col-span-full text-center py-10 text-gray-400 text-sm">Cargando productos...</p>
+      <!-- Carga dinámica -->
     </div>
   </main>
 
@@ -151,7 +151,6 @@
     let productosLocales = [];
 
     async function obtenerProductos() {
-      const grid = document.getElementById('grid-productos');
       try {
         const { data, error } = await db.from('productos').select('*').order('id', { ascending: false });
         if (error) throw error;
@@ -169,17 +168,15 @@
         renderizarProductos(productosLocales);
       } catch (err) {
         console.error("Error al cargar productos desde Supabase:", err);
-        if(grid) grid.innerHTML = `<p class="col-span-full text-center py-10 text-red-400 text-sm">Error al cargar la base de datos.</p>`;
       }
     }
 
     function renderizarProductos(lista) {
       const grid = document.getElementById('grid-productos');
-      if(!grid) return;
       grid.innerHTML = '';
       
       if (lista.length === 0) {
-        grid.innerHTML = `<p class="col-span-full text-center py-10 text-gray-400 text-sm">No hay productos disponibles actualmente.</p>`;
+        grid.innerHTML = `<p class="col-span-full text-center py-10 text-gray-400 text-sm">No hay productos disponibles.</p>`;
         return;
       }
 
@@ -224,14 +221,14 @@
               </div>
             </div>
 
-            <h4 class="text-xs font-bold line-clamp-2 text-gray-800 dark:text-gray-100">${p.nombre || ''}</h4>
-            <p class="text-[10px] text-gray-400">Cód: ${p.codigo || ''}</p>
+            <h4 class="text-xs font-bold line-clamp-2 text-gray-800 dark:text-gray-100">${p.nombre}</h4>
+            <p class="text-[10px] text-gray-400">Cód: ${p.codigo}</p>
           </div>
 
           <div class="mt-3 pt-2 border-t border-gray-100 dark:border-gray-700/50 flex items-center justify-between">
-            <span class="text-sm font-extrabold text-gray-900 dark:text-white">$${Number(p.precio || 0).toFixed(2)}</span>
+            <span class="text-sm font-extrabold text-gray-900 dark:text-white">$${Number(p.precio).toFixed(2)}</span>
             
-            <a href="https://wa.me/${TELEFONO_WHATSAPP}?text=Hola, consulto por el producto: ${encodeURIComponent(p.nombre || '')} (Cód: ${p.codigo || ''})" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5">
+            <a href="https://wa.me/${TELEFONO_WHATSAPP}?text=Hola, consulto por el producto: ${encodeURIComponent(p.nombre)} (Cód: ${p.codigo})" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5">
               <i class="ph ph-whatsapp-logo text-base"></i> Consultar
             </a>
           </div>
